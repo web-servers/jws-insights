@@ -1,6 +1,5 @@
 package com.redhat.jws.insights;
 
-import java.util.Collections;
 import java.util.Map;
 
 import com.redhat.insights.AbstractTopLevelReportBase;
@@ -17,8 +16,8 @@ public class TomcatReport extends AbstractTopLevelReportBase implements Insights
         super(logger, config, subReports);
     }
 
-    public static TomcatReport of(InsightsLogger logger, InsightsConfiguration configuration) {
-        return new TomcatReport(logger, configuration, Collections.emptyMap());
+    public static TomcatReport of(InsightsLogger logger, InsightsConfiguration configuration, Map<String, InsightsSubreport> subReports) {
+        return new TomcatReport(logger, configuration, subReports);
     }
 
     @Override

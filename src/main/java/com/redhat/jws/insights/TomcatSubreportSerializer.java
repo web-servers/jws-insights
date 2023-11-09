@@ -26,29 +26,10 @@ import com.redhat.insights.InsightsSubreport;
 
 public class TomcatSubreportSerializer extends JsonSerializer<InsightsSubreport> implements NotificationListener {
 
-    /**
-     * MBean server.
-     */
     protected MBeanServer mBeanServer = null;
-
-
-    /**
-     * Vector of thread pools object names.
-     */
     protected final List<ObjectName> threadPools = Collections.synchronizedList(new ArrayList<>());
-
-
-    /**
-     * Vector of request processors object names.
-     */
     protected final List<ObjectName> requestProcessors = Collections.synchronizedList(new ArrayList<>());
-
-
-    /**
-     * Vector of global request processors object names.
-     */
     protected final List<ObjectName> globalRequestProcessors = Collections.synchronizedList(new ArrayList<>());
-
 
     TomcatSubreportSerializer() {
         // Retrieve the MBean server
