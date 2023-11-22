@@ -17,6 +17,8 @@ import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
 import org.apache.catalina.manager.StatusTransformer;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.apache.tomcat.util.modeler.Registry;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -25,6 +27,8 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.redhat.insights.InsightsSubreport;
 
 public class TomcatSubreportSerializer extends JsonSerializer<InsightsSubreport> implements NotificationListener {
+
+    private static final Log log = LogFactory.getLog(TomcatSubreportSerializer.class);
 
     protected MBeanServer mBeanServer = null;
     protected final List<ObjectName> threadPools = Collections.synchronizedList(new ArrayList<>());
@@ -73,8 +77,7 @@ public class TomcatSubreportSerializer extends JsonSerializer<InsightsSubreport>
             mBeanServer.addNotificationListener(objectName, this, null, null);
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("Error initializing JMX", e);
         }
     }
 
@@ -120,12 +123,12 @@ public class TomcatSubreportSerializer extends JsonSerializer<InsightsSubreport>
                     requestProcessors, 2, null);
             StatusTransformer.writeDetailedState(writer, mBeanServer, 2);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error("Error serializing configuration", e);
         }
         StatusTransformer.writeFooter(writer, 2);
         writer.flush();
         generator.writeRaw(stringWriter.toString());
+        generator.flush();
     }
 
 }
