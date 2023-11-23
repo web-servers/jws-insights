@@ -30,8 +30,14 @@ import org.apache.catalina.Lifecycle;
 import org.apache.catalina.LifecycleEvent;
 import org.apache.catalina.LifecycleListener;
 import org.apache.catalina.Server;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
+import org.apache.tomcat.util.json.JSONParser;
+import org.apache.tomcat.util.json.ParseException;
 
 public class InsightsLifecycleListener implements LifecycleListener {
+
+    private static final Log log = LogFactory.getLog(InsightsLifecycleListener.class);
 
     private InsightsReportController insightsReportController;
     private InsightsReport insightsReport;
@@ -58,8 +64,8 @@ public class InsightsLifecycleListener implements LifecycleListener {
             Map<String, InsightsSubreport> subReports = new LinkedHashMap<>(2);
             TomcatSubreport tomcatSubreport = new TomcatSubreport();
             ClasspathJarInfoSubreport jarsSubreport = new ClasspathJarInfoSubreport(logger);
-            subReports.put("tomcat", tomcatSubreport);
             subReports.put("jars", jarsSubreport);
+            subReports.put("tomcat", tomcatSubreport);
             insightsReport = TomcatReport.of(logger, configuration, subReports);
 
             Server server = (Server) event.getLifecycle();
@@ -76,15 +82,19 @@ public class InsightsLifecycleListener implements LifecycleListener {
             } catch (Throwable e) {
                throw new IllegalStateException("Insights init failure", e);
             }
-            try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-                    JsonGenerator generator = createFor(insightsReport).writerWithDefaultPrettyPrinter().createGenerator(out)) {
-                insightsReport.getSerializer().serialize(insightsReport, generator, null);
-                generator.flush();
-                byte[] report = out.toByteArray();
-                System.out.println("Report: " + new String(report, "UTF-8"));
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            if (log.isTraceEnabled()) {
+                try (ByteArrayOutputStream out = new ByteArrayOutputStream();
+                        JsonGenerator generator = createFor(insightsReport).writerWithDefaultPrettyPrinter().createGenerator(out)) {
+                    insightsReport.getSerializer().serialize(insightsReport, generator, null);
+                    generator.flush();
+                    byte[] report = out.toByteArray();
+                    log.trace("Report: " + (new JSONParser(new String(report, "UTF-8"))).parse());
+                } catch (Exception e) {
+                    log.error("JSON error", e);
+                }
             }
+
         } else if (Lifecycle.STOP_EVENT.equals(event.getType())) {
             if (insightsReportController != null) {
                 insightsReportController.shutdown();

@@ -116,7 +116,7 @@ public class TomcatSubreportSerializer extends JsonSerializer<InsightsSubreport>
     public void serialize(InsightsSubreport subreport, JsonGenerator generator, SerializerProvider serializerProvider) throws IOException {
         StringWriter stringWriter = new StringWriter();
         PrintWriter writer = new PrintWriter(stringWriter);
-        StatusTransformer.writeHeader(writer, null, 2);
+        writer.write(" : {");
         try {
             StatusTransformer.writeVMState(writer, 2, null);
             StatusTransformer.writeConnectorsState(writer, mBeanServer, threadPools, globalRequestProcessors,
@@ -125,9 +125,12 @@ public class TomcatSubreportSerializer extends JsonSerializer<InsightsSubreport>
         } catch (Exception e) {
             log.error("Error serializing configuration", e);
         }
-        StatusTransformer.writeFooter(writer, 2);
+        writer.write("}");
         writer.flush();
         generator.writeRaw(stringWriter.toString());
+        if (log.isDebugEnabled()) {
+            log.debug("JSON: " + stringWriter.toString());
+        }
         generator.flush();
     }
 
