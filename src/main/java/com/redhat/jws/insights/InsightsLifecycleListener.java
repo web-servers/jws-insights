@@ -9,7 +9,6 @@ import com.redhat.insights.Filtering;
 import com.redhat.insights.InsightsReport;
 import com.redhat.insights.InsightsReportController;
 import com.redhat.insights.InsightsSubreport;
-import com.redhat.insights.config.EnvAndSysPropsInsightsConfiguration;
 import com.redhat.insights.config.InsightsConfiguration;
 import com.redhat.insights.core.httpclient.InsightsJdkHttpClient;
 import com.redhat.insights.http.InsightsFileWritingClient;
@@ -43,7 +42,7 @@ public class InsightsLifecycleListener implements LifecycleListener {
     private InsightsReportController insightsReportController;
     private InsightsReport insightsReport;
     private InsightsLogger logger = new TomcatLogger();
-    private InsightsConfiguration configuration = new EnvAndSysPropsInsightsConfiguration();
+    private InsightsConfiguration configuration = new TomcatConfiguration();
 
     @Override
     public void lifecycleEvent(LifecycleEvent event) {
