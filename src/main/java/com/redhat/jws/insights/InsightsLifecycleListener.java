@@ -83,19 +83,6 @@ public class InsightsLifecycleListener implements LifecycleListener {
                throw new IllegalStateException("Insights init failure", e);
             }
 
-            if (log.isTraceEnabled()) {
-                try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-                        JsonGenerator generator = createFor(insightsReport).writerWithDefaultPrettyPrinter().createGenerator(out)) {
-                    insightsReport.generateReport(Filtering.DEFAULT);
-                    insightsReport.getSerializer().serialize(insightsReport, generator, null);
-                    generator.flush();
-                    byte[] report = out.toByteArray();
-                    log.trace("Report: " + (new JSONParser(new String(report, "UTF-8"))).parse());
-                } catch (Exception e) {
-                    log.error("JSON error", e);
-                }
-            }
-
         } else if (Lifecycle.STOP_EVENT.equals(event.getType())) {
             if (insightsReportController != null) {
                 insightsReportController.shutdown();
@@ -104,20 +91,5 @@ public class InsightsLifecycleListener implements LifecycleListener {
         }
 
     }
-
-    public static ObjectMapper createFor(InsightsReport insightsReport) {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-
-        SimpleModule simpleModule =
-            new SimpleModule(
-                "SimpleModule", new Version(1, 0, 0, null, "com.redhat.insights", "runtimes-java"));
-        simpleModule.addSerializer(InsightsReport.class, insightsReport.getSerializer());
-        for (InsightsSubreport subreport : insightsReport.getSubreports().values()) {
-          simpleModule.addSerializer(subreport.getClass(), subreport.getSerializer());
-        }
-        mapper.registerModule(simpleModule);
-        return mapper;
-      }
 
 }
