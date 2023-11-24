@@ -1,5 +1,14 @@
 package com.redhat.jws.insights;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.function.Supplier;
+
+import javax.net.ssl.SSLContext;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,15 +25,6 @@ import com.redhat.insights.http.InsightsMultiClient;
 import com.redhat.insights.jars.ClasspathJarInfoSubreport;
 import com.redhat.insights.logging.InsightsLogger;
 import com.redhat.insights.tls.PEMSupport;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.function.Supplier;
-
-import javax.net.ssl.SSLContext;
 
 import org.apache.catalina.Lifecycle;
 import org.apache.catalina.LifecycleEvent;

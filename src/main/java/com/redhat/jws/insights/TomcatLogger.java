@@ -1,9 +1,9 @@
 package com.redhat.jws.insights;
 
+import com.redhat.insights.logging.InsightsLogger;
+
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
-
-import com.redhat.insights.logging.InsightsLogger;
 
 public class TomcatLogger implements InsightsLogger {
 
