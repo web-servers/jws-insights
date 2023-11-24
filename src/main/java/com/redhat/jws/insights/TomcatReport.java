@@ -3,12 +3,11 @@ package com.redhat.jws.insights;
 import java.util.Map;
 
 import com.redhat.insights.AbstractTopLevelReportBase;
-import com.redhat.insights.InsightsReport;
 import com.redhat.insights.InsightsSubreport;
 import com.redhat.insights.config.InsightsConfiguration;
 import com.redhat.insights.logging.InsightsLogger;
 
-public class TomcatReport extends AbstractTopLevelReportBase implements InsightsReport {
+public class TomcatReport extends AbstractTopLevelReportBase {
     private TomcatReport(
             InsightsLogger logger,
             InsightsConfiguration config,

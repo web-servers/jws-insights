@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.redhat.insights.Filtering;
 import com.redhat.insights.InsightsReport;
 import com.redhat.insights.InsightsReportController;
 import com.redhat.insights.InsightsSubreport;
@@ -86,6 +87,7 @@ public class InsightsLifecycleListener implements LifecycleListener {
             if (log.isTraceEnabled()) {
                 try (ByteArrayOutputStream out = new ByteArrayOutputStream();
                         JsonGenerator generator = createFor(insightsReport).writerWithDefaultPrettyPrinter().createGenerator(out)) {
+                    insightsReport.generateReport(Filtering.DEFAULT);
                     insightsReport.getSerializer().serialize(insightsReport, generator, null);
                     generator.flush();
                     byte[] report = out.toByteArray();
