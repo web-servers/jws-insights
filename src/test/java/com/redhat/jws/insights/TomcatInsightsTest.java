@@ -23,7 +23,6 @@ import com.redhat.insights.config.InsightsConfiguration;
 import com.redhat.insights.jars.ClasspathJarInfoSubreport;
 import com.redhat.insights.logging.InsightsLogger;
 import com.redhat.jws.insights.InsightsLifecycleListener;
-import com.redhat.jws.insights.TomcatConfiguration;
 import com.redhat.jws.insights.TomcatLogger;
 import com.redhat.jws.insights.TomcatReport;
 import com.redhat.jws.insights.TomcatSubreport;
@@ -62,7 +61,6 @@ public class TomcatInsightsTest extends TestCase {
         connector.setPort(0);
         tomcat.getService().addConnector(connector);
         tomcat.setConnector(connector);
-        tomcat.getServer().addLifecycleListener(new InsightsLifecycleListener());
         tomcat.start();
 
         InsightsLogger logger = new TomcatLogger();
@@ -71,7 +69,7 @@ public class TomcatInsightsTest extends TestCase {
         ClasspathJarInfoSubreport jarsSubreport = new ClasspathJarInfoSubreport(logger);
         subReports.put("jars", jarsSubreport);
         subReports.put("tomcat", tomcatSubreport);
-        InsightsConfiguration configuration = new TomcatConfiguration();
+        InsightsConfiguration configuration = new InsightsLifecycleListener();
         InsightsReport insightsReport = TomcatReport.of(logger, configuration, subReports);
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();
                 JsonGenerator generator = createFor(insightsReport).writerWithDefaultPrettyPrinter().createGenerator(out)) {
