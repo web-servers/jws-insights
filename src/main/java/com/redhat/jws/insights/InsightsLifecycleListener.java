@@ -55,6 +55,8 @@ public class InsightsLifecycleListener extends EnvAndSysPropsInsightsConfigurati
             if (!(event.getLifecycle() instanceof Server)) {
                 throw new IllegalArgumentException("Not associated with a server");
             }
+            Server server = (Server) event.getLifecycle();
+
             // Init Insights
             PEMSupport pemSupport = new PEMSupport(logger, this);
             Supplier<SSLContext> sslContextSupplier = () -> {
@@ -66,13 +68,12 @@ public class InsightsLifecycleListener extends EnvAndSysPropsInsightsConfigurati
             };
 
             Map<String, InsightsSubreport> subReports = new LinkedHashMap<>(2);
-            TomcatSubreport tomcatSubreport = new TomcatSubreport();
-            ClasspathJarInfoSubreport jarsSubreport = new ClasspathJarInfoSubreport(logger);
-            subReports.put("jars", jarsSubreport);
-            subReports.put("tomcat", tomcatSubreport);
+            subReports.put("jars", new ClasspathJarInfoSubreport(logger));
+            subReports.put("jws", new JWSSubreport(server, logger));
+            // The "tomcat" report is the json from the status manager servlet
+            subReports.put("tomcat", new TomcatSubreport());
             insightsReport = TomcatReport.of(logger, this, subReports);
 
-            Server server = (Server) event.getLifecycle();
             TomcatInsightsScheduler insightsScheduler =
                   new TomcatInsightsScheduler(logger, this, server.getUtilityExecutor());
 

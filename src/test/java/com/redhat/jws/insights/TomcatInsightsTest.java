@@ -61,6 +61,7 @@ public class TomcatInsightsTest extends TestCase {
         connector.setPort(0);
         tomcat.getService().addConnector(connector);
         tomcat.setConnector(connector);
+        tomcat.addContext("/test", null);
         tomcat.start();
 
         InsightsLogger logger = new TomcatLogger();
@@ -68,6 +69,7 @@ public class TomcatInsightsTest extends TestCase {
         TomcatSubreport tomcatSubreport = new TomcatSubreport();
         ClasspathJarInfoSubreport jarsSubreport = new ClasspathJarInfoSubreport(logger);
         subReports.put("jars", jarsSubreport);
+        subReports.put("jws", new JWSSubreport(tomcat.getServer(), logger));
         subReports.put("tomcat", tomcatSubreport);
         InsightsConfiguration configuration = new InsightsLifecycleListener();
         InsightsReport insightsReport = TomcatReport.of(logger, configuration, subReports);
