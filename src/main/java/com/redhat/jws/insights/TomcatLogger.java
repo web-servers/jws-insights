@@ -1,3 +1,4 @@
+/* Copyright (C) Red Hat 2023 */
 package com.redhat.jws.insights;
 
 import com.redhat.insights.logging.InsightsLogger;
