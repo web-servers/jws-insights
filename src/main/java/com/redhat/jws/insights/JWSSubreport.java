@@ -7,6 +7,10 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.redhat.insights.InsightsSubreport;
 import com.redhat.insights.logging.InsightsLogger;
 
+/**
+ * JWS subreport which only focuses on connector names and fingerprinting binaries
+ * of the deployed webapps.
+ */
 public class JWSSubreport implements InsightsSubreport {
 
     private final JWSSubreportSerializer serializer;

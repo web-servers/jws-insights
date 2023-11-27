@@ -8,7 +8,12 @@ import com.redhat.insights.InsightsSubreport;
 import com.redhat.insights.config.InsightsConfiguration;
 import com.redhat.insights.logging.InsightsLogger;
 
+/**
+ * The main report for Tomcat/JWS. The superclass is the one generating the
+ * "basic" report as long as generateReport is called.
+ */
 public class TomcatReport extends AbstractTopLevelReportBase {
+
     private TomcatReport(
             InsightsLogger logger,
             InsightsConfiguration config,

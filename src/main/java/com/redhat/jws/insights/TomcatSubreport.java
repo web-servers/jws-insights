@@ -4,6 +4,10 @@ package com.redhat.jws.insights;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.redhat.insights.InsightsSubreport;
 
+/**
+ * JMX based subreport for Tomcat, which simply uses the json status from the
+ * status manager servlet. This includes a lot of telemetry data.
+ */
 public class TomcatSubreport implements InsightsSubreport {
 
     private final TomcatSubreportSerializer serializer;
