@@ -189,7 +189,11 @@ public class InsightsLifecycleListener extends EnvAndSysPropsInsightsConfigurati
     }
 
     public void setConnectPeriodValue(String connectPeriod) {
-        this.connectPeriod = Duration.parse(connectPeriod);
+        try {
+            this.connectPeriod = Duration.parse(connectPeriod);
+        } catch (Exception e) {
+            log.warn("Invalid argument connectPeriod", e);
+        }
     }
 
     private Double httpClientRetryBackoffFactor = null;
@@ -208,7 +212,11 @@ public class InsightsLifecycleListener extends EnvAndSysPropsInsightsConfigurati
     }
 
     public void setHttpClientRetryBackoffFactorValue(String httpClientRetryBackoffFactor) {
-        this.httpClientRetryBackoffFactor = Double.parseDouble(httpClientRetryBackoffFactor);
+        try {
+            this.httpClientRetryBackoffFactor = Double.parseDouble(httpClientRetryBackoffFactor);
+        } catch (Exception e) {
+            log.warn("Invalid argument httpClientRetryBackoffFactor", e);
+        }
     }
 
     private Long httpClientRetryInitialDelay = null;
@@ -254,7 +262,11 @@ public class InsightsLifecycleListener extends EnvAndSysPropsInsightsConfigurati
     }
 
     public void setHttpClientTimeoutValue(String httpClientTimeout) {
-        this.httpClientTimeout = Duration.parse(httpClientTimeout);
+        try {
+            this.httpClientTimeout = Duration.parse(httpClientTimeout);
+        } catch (Exception e) {
+            log.warn("Invalid argument httpClientTimeout", e);
+        }
     }
 
     private String keyFilePath = null;
@@ -347,7 +359,11 @@ public class InsightsLifecycleListener extends EnvAndSysPropsInsightsConfigurati
     }
 
     public void setUpdatePeriod(String updatePeriod) {
-        this.updatePeriod = Duration.parse(updatePeriod);
+        try {
+            this.updatePeriod = Duration.parse(updatePeriod);
+        } catch (Exception e) {
+            log.warn("Invalid argument updatePeriod", e);
+        }
     }
 
     private String uploadBaseURL = null;
