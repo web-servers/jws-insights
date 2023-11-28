@@ -68,7 +68,7 @@ public class InsightsLifecycleListener extends EnvAndSysPropsInsightsConfigurati
                }
             };
 
-            Map<String, InsightsSubreport> subReports = new LinkedHashMap<>(2);
+            Map<String, InsightsSubreport> subReports = new LinkedHashMap<>(3);
             subReports.put("jars", new ClasspathJarInfoSubreport(logger));
             subReports.put("jws", new JWSSubreport(server, logger));
             // The "tomcat" report is the json from the status manager servlet

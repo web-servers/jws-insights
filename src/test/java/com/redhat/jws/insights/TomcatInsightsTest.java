@@ -63,7 +63,7 @@ public class TomcatInsightsTest extends TestCase {
         tomcat.start();
 
         InsightsLogger logger = new TomcatLogger();
-        Map<String, InsightsSubreport> subReports = new LinkedHashMap<>(2);
+        Map<String, InsightsSubreport> subReports = new LinkedHashMap<>(3);
         TomcatSubreport tomcatSubreport = new TomcatSubreport();
         ClasspathJarInfoSubreport jarsSubreport = new ClasspathJarInfoSubreport(logger);
         subReports.put("jars", jarsSubreport);
@@ -94,7 +94,7 @@ public class TomcatInsightsTest extends TestCase {
         tomcat.start();
 
         InsightsLogger logger = new TomcatLogger();
-        Map<String, InsightsSubreport> subReports = new LinkedHashMap<>(2);
+        Map<String, InsightsSubreport> subReports = new LinkedHashMap<>(3);
         TomcatSubreport tomcatSubreport = new TomcatSubreport();
         ClasspathJarInfoSubreport jarsSubreport = new ClasspathJarInfoSubreport(logger);
         subReports.put("jars", jarsSubreport);
@@ -127,7 +127,7 @@ public class TomcatInsightsTest extends TestCase {
         tomcat.start();
 
         InsightsLogger logger = new TomcatLogger();
-        Map<String, InsightsSubreport> subReports = new LinkedHashMap<>(2);
+        Map<String, InsightsSubreport> subReports = new LinkedHashMap<>(3);
         TomcatSubreport tomcatSubreport = new TomcatSubreport();
         ClasspathJarInfoSubreport jarsSubreport = new ClasspathJarInfoSubreport(logger);
         subReports.put("jars", jarsSubreport);
@@ -149,18 +149,7 @@ public class TomcatInsightsTest extends TestCase {
     }
 
     private static ObjectMapper createFor(InsightsReport insightsReport) {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-
-        SimpleModule simpleModule =
-            new SimpleModule(
-                "SimpleModule", new Version(1, 0, 0, null, "com.redhat.insights", "runtimes-java"));
-        simpleModule.addSerializer(InsightsReport.class, insightsReport.getSerializer());
-        for (InsightsSubreport subreport : insightsReport.getSubreports().values()) {
-          simpleModule.addSerializer(subreport.getClass(), subreport.getSerializer());
-        }
-        mapper.registerModule(simpleModule);
-        return mapper;
+        return new ObjectMapper();
       }
 
 }
