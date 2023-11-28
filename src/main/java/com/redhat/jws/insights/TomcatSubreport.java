@@ -1,6 +1,8 @@
 /* Copyright (C) Red Hat 2023 */
 package com.redhat.jws.insights;
 
+import org.apache.catalina.util.ServerInfo;
+
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.redhat.insights.reports.InsightsSubreport;
 
@@ -28,7 +30,7 @@ public class TomcatSubreport implements InsightsSubreport {
 
     @Override
     public String getVersion() {
-        return "1.0.0";
+        return ServerInfo.getServerNumber();
     }
 
 }
