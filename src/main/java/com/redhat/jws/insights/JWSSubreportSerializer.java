@@ -55,6 +55,10 @@ public class JWSSubreportSerializer extends JsonSerializer<InsightsSubreport> {
                 generator.writeEndObject();
             }
             generator.writeEndArray();
+            if (service.getContainer() == null) {
+                // No engine, so nothing more to do
+                break;
+            }
             Container[] hosts = service.getContainer().findChildren();
             generator.writeFieldName("hosts");
             generator.writeStartArray();
