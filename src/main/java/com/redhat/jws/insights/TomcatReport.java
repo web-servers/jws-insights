@@ -3,10 +3,10 @@ package com.redhat.jws.insights;
 
 import java.util.Map;
 
-import com.redhat.insights.AbstractTopLevelReportBase;
-import com.redhat.insights.InsightsSubreport;
 import com.redhat.insights.config.InsightsConfiguration;
 import com.redhat.insights.logging.InsightsLogger;
+import com.redhat.insights.reports.AbstractTopLevelReportBase;
+import com.redhat.insights.reports.InsightsSubreport;
 
 /**
  * The main report for Tomcat/JWS. The superclass is the one generating the

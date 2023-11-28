@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.redhat.insights.InsightsSubreport;
 import com.redhat.insights.jars.JarAnalyzer;
 import com.redhat.insights.jars.JarInfo;
 import com.redhat.insights.logging.InsightsLogger;
+import com.redhat.insights.reports.InsightsSubreport;
 
 import org.apache.catalina.Container;
 import org.apache.catalina.Context;
@@ -51,7 +51,7 @@ public class JWSSubreportSerializer extends JsonSerializer<InsightsSubreport> {
             for (Connector connector : connectors) {
                 String name = String.valueOf(IntrospectionUtils.getProperty(connector, "name"));
                 generator.writeStartObject();
-                generator.writeStringField("name", name);
+                generator.writeStringField("name", name.substring(1, name.length() - 1));
                 generator.writeEndObject();
             }
             generator.writeEndArray();

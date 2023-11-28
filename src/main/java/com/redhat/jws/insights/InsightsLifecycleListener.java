@@ -19,9 +19,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.redhat.insights.Filtering;
 import com.redhat.insights.InsightsException;
-import com.redhat.insights.InsightsReport;
 import com.redhat.insights.InsightsReportController;
-import com.redhat.insights.InsightsSubreport;
 import com.redhat.insights.config.EnvAndSysPropsInsightsConfiguration;
 import com.redhat.insights.config.InsightsConfiguration;
 import com.redhat.insights.config.InsightsConfiguration.ProxyConfiguration;
@@ -30,6 +28,8 @@ import com.redhat.insights.http.InsightsFileWritingClient;
 import com.redhat.insights.http.InsightsMultiClient;
 import com.redhat.insights.jars.ClasspathJarInfoSubreport;
 import com.redhat.insights.logging.InsightsLogger;
+import com.redhat.insights.reports.InsightsReport;
+import com.redhat.insights.reports.InsightsSubreport;
 import com.redhat.insights.tls.PEMSupport;
 
 import org.apache.catalina.Lifecycle;

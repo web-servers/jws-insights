@@ -4,8 +4,8 @@ package com.redhat.jws.insights;
 import org.apache.catalina.Server;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
-import com.redhat.insights.InsightsSubreport;
 import com.redhat.insights.logging.InsightsLogger;
+import com.redhat.insights.reports.InsightsSubreport;
 
 /**
  * JWS subreport which only focuses on connector names and fingerprinting binaries

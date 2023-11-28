@@ -2,7 +2,7 @@
 package com.redhat.jws.insights;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
-import com.redhat.insights.InsightsSubreport;
+import com.redhat.insights.reports.InsightsSubreport;
 
 /**
  * JMX based subreport for Tomcat, which simply uses the json status from the

@@ -20,7 +20,7 @@ import javax.management.ObjectName;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.redhat.insights.InsightsSubreport;
+import com.redhat.insights.reports.InsightsSubreport;
 
 import org.apache.catalina.manager.StatusTransformer;
 import org.apache.juli.logging.Log;
