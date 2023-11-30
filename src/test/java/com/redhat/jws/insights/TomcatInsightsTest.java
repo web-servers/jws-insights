@@ -8,7 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.apache.catalina.Globals;
-import org.apache.catalina.LifecycleException;
 import org.apache.catalina.connector.Connector;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.juli.logging.Log;
@@ -18,20 +17,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.redhat.insights.Filtering;
 import com.redhat.insights.config.InsightsConfiguration;
 import com.redhat.insights.jars.ClasspathJarInfoSubreport;
 import com.redhat.insights.logging.InsightsLogger;
 import com.redhat.insights.reports.InsightsReport;
 import com.redhat.insights.reports.InsightsSubreport;
-import com.redhat.jws.insights.TomcatInsightsConfiguration;
-import com.redhat.jws.insights.TomcatLogger;
-import com.redhat.jws.insights.TomcatReport;
-import com.redhat.jws.insights.TomcatSubreport;
-import com.redhat.jws.insights.TomcatSubreportSerializer;
 
 /**
  * Unit test for simple App.
