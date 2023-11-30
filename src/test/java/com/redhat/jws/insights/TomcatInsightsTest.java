@@ -1,6 +1,8 @@
 /* Copyright (C) Red Hat 2023 */
 package com.redhat.jws.insights;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.io.ByteArrayOutputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -12,6 +14,8 @@ import org.apache.catalina.startup.Tomcat;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.apache.tomcat.util.json.JSONParser;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.Version;
@@ -30,34 +34,19 @@ import com.redhat.jws.insights.TomcatReport;
 import com.redhat.jws.insights.TomcatSubreport;
 import com.redhat.jws.insights.TomcatSubreportSerializer;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 /**
  * Unit test for simple App.
  */
-public class TomcatInsightsTest extends TestCase {
+public class TomcatInsightsTest {
 
     private static final Log log = LogFactory.getLog(TomcatSubreportSerializer.class);
 
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public TomcatInsightsTest(String testName) {
-        super(testName);
+    @BeforeAll
+    public static void setup() {
         System.setProperty(Globals.CATALINA_HOME_PROP, "target/test-classes");
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite() {
-        return new TestSuite(TomcatInsightsTest.class);
-    }
-
+    @Test
     public void testEmptyTomcat() throws Exception {
         Tomcat tomcat = new Tomcat();
         tomcat.start();
@@ -72,18 +61,19 @@ public class TomcatInsightsTest extends TestCase {
         InsightsConfiguration configuration = new InsightsLifecycleListener();
         InsightsReport insightsReport = TomcatReport.of(logger, configuration, subReports);
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-                JsonGenerator generator = createFor(insightsReport).writerWithDefaultPrettyPrinter().createGenerator(out)) {
+                JsonGenerator generator = (new ObjectMapper()).writerWithDefaultPrettyPrinter().createGenerator(out)) {
             insightsReport.generateReport(Filtering.DEFAULT);
             insightsReport.getSerializer().serialize(insightsReport, generator, null);
             generator.flush();
             String report = new String(out.toByteArray(), "UTF-8");
-            log.info("Report: " + report);
+            log.info("Insights report: " + report);
             String result = (new JSONParser(report)).parse().toString();
             // Verify presence of basic report
             assertTrue(result.indexOf("basic") > 0);
         }
     }
 
+    @Test
     public void testBasicTomcat() throws Exception {
         Tomcat tomcat = new Tomcat();
         Connector connector = new Connector("HTTP/1.1");
@@ -103,12 +93,12 @@ public class TomcatInsightsTest extends TestCase {
         InsightsConfiguration configuration = new InsightsLifecycleListener();
         InsightsReport insightsReport = TomcatReport.of(logger, configuration, subReports);
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-                JsonGenerator generator = createFor(insightsReport).writerWithDefaultPrettyPrinter().createGenerator(out)) {
+                JsonGenerator generator = (new ObjectMapper()).writerWithDefaultPrettyPrinter().createGenerator(out)) {
             insightsReport.generateReport(Filtering.DEFAULT);
             insightsReport.getSerializer().serialize(insightsReport, generator, null);
             generator.flush();
             String report = new String(out.toByteArray(), "UTF-8");
-            log.info("Report: " + report);
+            log.info("Insights report: " + report);
             String result = (new JSONParser(report)).parse().toString();
             // Verify connector info
             assertTrue(result.indexOf("http-nio-auto") > 0);
@@ -116,6 +106,7 @@ public class TomcatInsightsTest extends TestCase {
         }
     }
 
+    @Test
     public void testTomcat() throws Exception {
         Tomcat tomcat = new Tomcat();
         Connector connector = new Connector("HTTP/1.1");
@@ -136,20 +127,16 @@ public class TomcatInsightsTest extends TestCase {
         InsightsConfiguration configuration = new InsightsLifecycleListener();
         InsightsReport insightsReport = TomcatReport.of(logger, configuration, subReports);
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-                JsonGenerator generator = createFor(insightsReport).writerWithDefaultPrettyPrinter().createGenerator(out)) {
+                JsonGenerator generator = (new ObjectMapper()).writerWithDefaultPrettyPrinter().createGenerator(out)) {
             insightsReport.generateReport(Filtering.DEFAULT);
             insightsReport.getSerializer().serialize(insightsReport, generator, null);
             generator.flush();
             String report = new String(out.toByteArray(), "UTF-8");
-            log.info("Report: " + report);
+            log.info("Insights report: " + report);
             String result = (new JSONParser(report)).parse().toString();
             // Verify webapp jar checksum
             assertTrue(result.indexOf("a8dda6f938e91e18d47a6cb8593167222ba6abea") > 0);
         }
     }
-
-    private static ObjectMapper createFor(InsightsReport insightsReport) {
-        return new ObjectMapper();
-      }
 
 }
