@@ -72,7 +72,7 @@ public class JWSSubreportSerializer extends JsonSerializer<InsightsSubreport> {
                 generator.writeFieldName("contexts");
                 generator.writeStartArray(); //contexts
                 for (Container context : contexts) {
-                    String contextName = context.getName();
+                    String contextName = ((Context) context).getBaseName();
                     if (log.isDebugEnabled()) {
                         log.debug("Processing context: " + contextName);
                     }
