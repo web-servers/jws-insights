@@ -13,7 +13,6 @@ import org.apache.catalina.startup.Tomcat;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.apache.tomcat.util.json.JSONParser;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -32,13 +31,9 @@ public class TomcatInsightsTest {
 
     private static final Log log = LogFactory.getLog(TomcatSubreportSerializer.class);
 
-    @BeforeAll
-    public static void setup() {
-        System.setProperty(Globals.CATALINA_HOME_PROP, "target/test-classes");
-    }
-
     @Test
     public void testEmptyTomcat() throws Exception {
+        System.setProperty(Globals.CATALINA_HOME_PROP, "target/test-classes");
         Tomcat tomcat = new Tomcat();
         tomcat.start();
 
@@ -66,6 +61,7 @@ public class TomcatInsightsTest {
 
     @Test
     public void testBasicTomcat() throws Exception {
+        System.setProperty(Globals.CATALINA_HOME_PROP, "target/test-classes");
         Tomcat tomcat = new Tomcat();
         Connector connector = new Connector("HTTP/1.1");
         connector.setPort(0);
@@ -99,6 +95,7 @@ public class TomcatInsightsTest {
 
     @Test
     public void testTomcat() throws Exception {
+        System.setProperty(Globals.CATALINA_HOME_PROP, "target/test-classes");
         Tomcat tomcat = new Tomcat();
         Connector connector = new Connector("HTTP/1.1");
         connector.setPort(0);
