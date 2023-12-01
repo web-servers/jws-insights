@@ -2,7 +2,6 @@
 package com.redhat.jws.insights;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -40,6 +39,9 @@ public class JWSSubreportSerializer extends JsonSerializer<InsightsSubreport> {
     @Override
     public void serialize(InsightsSubreport subreport, JsonGenerator generator, SerializerProvider serializerProvider)
             throws IOException {
+        if (log.isDebugEnabled()) {
+            log.debug("Serializing JWS subreport");
+        }
         generator.writeStartObject();
         generator.writeStringField("version", subreport.getVersion());
         JarAnalyzer analyzer = new JarAnalyzer(logger, true);
@@ -71,20 +73,25 @@ public class JWSSubreportSerializer extends JsonSerializer<InsightsSubreport> {
                 generator.writeStartArray(); //contexts
                 for (Container context : contexts) {
                     String contextName = context.getName();
+                    if (log.isDebugEnabled()) {
+                        log.debug("Processing context: " + contextName);
+                    }
                     generator.writeStartObject(); //context
                     generator.writeStringField("name", contextName);
-                    Loader loader = ((Context) context).getLoader();
-                    URLClassLoader classLoader = (URLClassLoader) loader.getClassLoader();
-                    URL[] urls = classLoader.getURLs();
                     ArrayList<JarInfo> jarInfos = new ArrayList<>();
-                    for (URL url : urls) {
-                        try {
-                            JarInfo jarInfo = analyzer.process(url).orElse(null);
-                            if (jarInfo != null) {
-                                jarInfos.add(jarInfo);
+                    Loader loader = ((Context) context).getLoader();
+                    if (loader.getClassLoader() instanceof URLClassLoader) {
+                        URLClassLoader classLoader = (URLClassLoader) loader.getClassLoader();
+                        URL[] urls = classLoader.getURLs();
+                        for (URL url : urls) {
+                            try {
+                                JarInfo jarInfo = analyzer.process(url).orElse(null);
+                                if (jarInfo != null) {
+                                    jarInfos.add(jarInfo);
+                                }
+                            } catch (Exception e) {
+                                log.info("Error processing JAR with URL: " + url, e);
                             }
-                        } catch (URISyntaxException e) {
-                            log.info("URI error", e);
                         }
                     }
                     generator.writeFieldName("jars");
