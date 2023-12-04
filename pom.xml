@@ -11,7 +11,7 @@
 
     <properties>
         <tomcat.version>10.1.16</tomcat.version>
-        <insights.version>2.0.0</insights.version>
+        <insights.version>2.0.1</insights.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
