@@ -14,13 +14,11 @@ public class TomcatInsightsScheduler implements InsightsScheduler {
 
     private boolean active = true;
     private final ScheduledExecutorService utilityExecutor;
-    private final InsightsLogger logger;
     private final InsightsConfiguration configuration;
 
     public TomcatInsightsScheduler(InsightsLogger logger,
             InsightsConfiguration configuration, ScheduledExecutorService utilityExecutor) {
         this.utilityExecutor = utilityExecutor;
-        this.logger = logger;
         this.configuration = configuration;
     }
 

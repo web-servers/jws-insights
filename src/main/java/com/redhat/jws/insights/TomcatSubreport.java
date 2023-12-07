@@ -30,6 +30,7 @@ public class TomcatSubreport implements InsightsSubreport {
 
     @Override
     public String getVersion() {
+        // Use the Tomcat version number
         return ServerInfo.getServerNumber();
     }
 

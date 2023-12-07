@@ -11,38 +11,38 @@ public class TomcatLogger implements InsightsLogger {
     private static final Log log = LogFactory.getLog(TomcatLogger.class);
 
     @Override
-    public void debug(String arg0) {
-        log.debug(arg0);
+    public void debug(String message) {
+        log.debug(message);
     }
 
     @Override
-    public void debug(String arg0, Throwable arg1) {
-        log.debug(arg0, arg1);
+    public void debug(String message, Throwable throwable) {
+        log.debug(message, throwable);
     }
 
     @Override
-    public void error(String arg0) {
-        log.error(arg0);
+    public void error(String message) {
+        log.error(message);
     }
 
     @Override
-    public void error(String arg0, Throwable arg1) {
-        log.error(arg0, arg1);
+    public void error(String message, Throwable throwable) {
+        log.error(message, throwable);
     }
 
     @Override
-    public void info(String arg0) {
-        log.info(arg0);
+    public void info(String message) {
+        log.info(message);
     }
 
     @Override
-    public void warning(String arg0) {
-        log.warn(arg0);
+    public void warning(String message) {
+        log.warn(message);
     }
 
     @Override
-    public void warning(String arg0, Throwable arg1) {
-        log.warn(arg0, arg1);
+    public void warning(String message, Throwable throwable) {
+        log.warn(message, throwable);
     }
 
 }

@@ -12,8 +12,6 @@ import org.apache.catalina.Lifecycle;
 import org.apache.catalina.LifecycleEvent;
 import org.apache.catalina.LifecycleListener;
 import org.apache.catalina.Server;
-import org.apache.juli.logging.Log;
-import org.apache.juli.logging.LogFactory;
 
 import com.redhat.insights.InsightsReportController;
 import com.redhat.insights.core.httpclient.InsightsJdkHttpClient;
@@ -26,8 +24,6 @@ import com.redhat.insights.reports.InsightsSubreport;
 import com.redhat.insights.tls.PEMSupport;
 
 public class InsightsLifecycleListener implements LifecycleListener {
-
-    private static final Log log = LogFactory.getLog(InsightsLifecycleListener.class);
 
     private InsightsReportController insightsReportController;
     private InsightsReport insightsReport;

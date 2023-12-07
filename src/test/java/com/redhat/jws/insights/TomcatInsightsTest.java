@@ -24,9 +24,6 @@ import com.redhat.insights.logging.InsightsLogger;
 import com.redhat.insights.reports.InsightsReport;
 import com.redhat.insights.reports.InsightsSubreport;
 
-/**
- * Unit test for simple App.
- */
 public class TomcatInsightsTest {
 
     private static final Log log = LogFactory.getLog(TomcatSubreportSerializer.class);
