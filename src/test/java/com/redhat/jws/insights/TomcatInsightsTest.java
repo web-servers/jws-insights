@@ -1,6 +1,7 @@
 /* Copyright (C) Red Hat 2023 */
 package com.redhat.jws.insights;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayOutputStream;
@@ -122,6 +123,30 @@ public class TomcatInsightsTest {
             // Verify webapp jar checksum
             assertTrue(result.indexOf("a8dda6f938e91e18d47a6cb8593167222ba6abea") > 0);
         }
+    }
+
+    @Test
+    public void testListenerOptingOutStartsCleanly() throws Exception {
+        System.setProperty(Globals.CATALINA_HOME_PROP, "target/test-classes");
+        Tomcat tomcat = new Tomcat();
+        InsightsLifecycleListener listener = new InsightsLifecycleListener();
+        listener.setOptingOut(true);
+        tomcat.getServer().addLifecycleListener(listener);
+        assertDoesNotThrow(() -> tomcat.start());
+        tomcat.stop();
+        tomcat.destroy();
+    }
+
+    @Test
+    public void testListenerNotOptingOutStartsCleanly() throws Exception {
+        System.setProperty(Globals.CATALINA_HOME_PROP, "target/test-classes");
+        Tomcat tomcat = new Tomcat();
+        InsightsLifecycleListener listener = new InsightsLifecycleListener();
+        listener.setOptingOut(false);
+        tomcat.getServer().addLifecycleListener(listener);
+        assertDoesNotThrow(() -> tomcat.start());
+        tomcat.stop();
+        tomcat.destroy();
     }
 
 }

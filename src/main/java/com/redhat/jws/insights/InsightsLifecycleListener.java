@@ -42,6 +42,11 @@ public class InsightsLifecycleListener implements LifecycleListener {
             }
             Server server = (Server) event.getLifecycle();
 
+            if (configuration.isOptingOut()) {
+                logger.info("Red Hat Insights client is opted out, skipping initialization");
+                return;
+            }
+
             // Init Insights
             PEMSupport pemSupport = new PEMSupport(logger, configuration);
             Supplier<SSLContext> sslContextSupplier = () -> {
