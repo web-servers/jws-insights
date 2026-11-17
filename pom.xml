@@ -75,6 +75,10 @@
                                         <exclude>META-INF/NOTICE</exclude>
                                         <!-- Unneeded configuration files -->
                                         <exclude>module-info.class</exclude>
+                                        <!-- The shaded jar is not multi-release (no "Multi-Release: true" manifest
+                                             attribute), so versioned entries are never loaded; some of them
+                                             (jackson-core, wildfly-common) also fail jar validation -->
+                                        <exclude>META-INF/versions/**</exclude>
                                     </excludes>
                                 </filter>
                             </filters>
