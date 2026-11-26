@@ -63,6 +63,15 @@
                         </goals>
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <artifactSet>
+                                <excludes>
+                                    <!-- Provided by JWS (tomcat/lib/jboss-logging.jar, needed by mod_cluster).
+                                         A bundled copy is not relocated, so depending on the jar order in
+                                         tomcat/lib it can shadow the JWS one, and mod_cluster 2.1 fails with
+                                         NoSuchMethodError on jboss-logging older than 3.6 -->
+                                    <exclude>org.jboss.logging:jboss-logging</exclude>
+                                </excludes>
+                            </artifactSet>
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>

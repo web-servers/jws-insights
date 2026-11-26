@@ -1,6 +1,8 @@
 # Red Hat Insights for JWS
 
 `mvn package` to build.
+The resulting jar bundles its dependencies except jboss-logging, which JWS already ships in `tomcat/lib`;
+outside of JWS, add a jboss-logging 3.x jar next to it.
 The listener should be added to `server.xml`, such as
 ```
 <Server>
